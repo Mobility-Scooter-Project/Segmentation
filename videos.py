@@ -3,10 +3,11 @@ Videos File
 -Handles all logic relating to video manipulation
 '''
 
-# Retrieves the frames from the inputted video and gets frames based on the given interval.
+# Retrieves the frames from the inputted video and returns a list of frames based on the given interval.
 # An alternate implementation which does not iterate through every single frame is commented out because
 # the video.set(cv2.CAP_PROP_POS_FRAMES, count - 1) function was found to be slow.
 def get_frames(video, interval):
+    # 
     success, frame = video.read()
     count = 1
     frames = []
