@@ -1,4 +1,5 @@
 from csv import writer
+from scipy import sparse
 '''
 CSV Output File
 -Handles writing data onto csv files
@@ -10,8 +11,10 @@ class CSVOutput:
         self.writer = writer(self.file)
         self.writer.writerow(column_names)
 
+    # writes a row onto the csv file
     def process(self, inputs):
-        self.writer.writerow(inputs)
+        sparsed = sparse.dok_matrix(inputs)
+        self.writer.writerow(list(sparsed.keys()))
 
     def __del__(self):
         self.file.close()
