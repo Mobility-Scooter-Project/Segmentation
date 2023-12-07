@@ -16,7 +16,7 @@ class SegmentAnything:
             device = torch.device("cpu")
 
         # The model weights and model type
-        sam_checkpoint = "sam_vit_b_01ec64.pth"
+        sam_checkpoint = "assets/sam_vit_b_01ec64.pth"
         model_type = "vit_b"
         
         # Define model and set it to device

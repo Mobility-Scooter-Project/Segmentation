@@ -5,20 +5,32 @@ Videos File
 import cv2
 
 class Video:
-    def __init__(self, video_src):
+    def __init__(self, video_src, interval):
         self.video = cv2.VideoCapture(video_src)
+        self.total = self.video.get(cv2.CAP_PROP_FRAME_COUNT)
+        self.interval = interval
+        self.count = interval
+
+    #returns a single frame from the video
+    def get_frame(self):
+        self.video.set(cv2.CAP_PROP_POS_FRAMES, self.count - 1)
+        success, frame = self.video.read()
+        if success:
+            self.count += self.interval
+            self.video.set(cv2.CAP_PROP_POS_FRAMES, self.count - 1)
+            return frame
     
     # Retrieves the frames from the inputted video and returns a list of frames based on the given interval.
     # An alternate implementation which does not iterate through every single frame is commented out because
     # the video.set(cv2.CAP_PROP_POS_FRAMES, count - 1) function was found to be slow.
-    def get_all_frames(self, interval):
+    def get_all_frames(self):
         # 
         success, frame = self.video.read()
         count = 1
         frames = []
 
         while success:
-            if count % interval == 0:
+            if count % self.interval == 0:
                 frames.append(frame)
             
             success, frame = self.video.read()
