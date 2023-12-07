@@ -35,3 +35,7 @@ def get_frames(video, interval):
     '''
     print("Retrieved Frames.")
     return frames
+
+# Generates a new video with the given frames and bounding box that 
+def create_video(frames, masks, box):
+    pass

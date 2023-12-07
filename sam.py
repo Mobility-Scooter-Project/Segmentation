@@ -23,3 +23,16 @@ class SegmentAnything:
         self.model = sam_model_registry[model_type](checkpoint=sam_checkpoint)
         self.model.to(device=device)
         self.predictor = SamPredictor(self.model)
+
+    # Generate mask for a frame with a given input box and returns a mask in the format of a 2D numpy array
+    def process(self, frame, input_box):
+        self.predictor.set_image(frame)
+
+        mask, _, _ = self.predictor.predict(
+        point_coords=None,
+        point_labels=None,
+        box=input_box[None, :],
+        multimask_output=False,
+        )
+
+        return mask
