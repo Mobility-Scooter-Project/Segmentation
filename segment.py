@@ -14,7 +14,7 @@ def process_file(in_file, out_file, interval, video_output):
     sammodel = SegmentAnything()
     yolomodel = YOLOv8()
     cap = Video(in_file, interval)
-    data_writer = CSVOutput(out_file, 'test')
+    data_writer = CSVOutput(out_file, None)
 
     count = 1
 

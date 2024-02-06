@@ -9,7 +9,8 @@ class CSVOutput:
     def __init__(self, path, column_names):
         self.file = open(path, 'w', newline='')
         self.writer = writer(self.file)
-        self.writer.writerow(column_names)
+        if column_names != None:
+            self.writer.writerow(column_names)
 
     # writes a row onto the csv file
     def process(self, inputs):
