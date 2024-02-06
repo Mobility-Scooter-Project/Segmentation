@@ -31,6 +31,15 @@ class Video:
 
         while success:
             if count % self.interval == 0:
+                
+                scale_percent = 30
+                width = int(frame.shape[1] * scale_percent / 100)
+                height = int(frame.shape[0] * scale_percent / 100)
+                dim = (width, height)
+                frame = cv2.resize(frame, dim, interpolation = cv2.INTER_AREA)
+                frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
+                
+
                 frames.append(frame)
             
             success, frame = self.video.read()
@@ -53,6 +62,6 @@ class Video:
         print("Retrieved Frames.")
         return frames
 
-    # Generates a new video with the given frames and bounding box that 
+    # Generates a new video with the given frames and bounding box (to do)
     def create_video(frames, masks, box):
         pass
