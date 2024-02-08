@@ -23,7 +23,16 @@ def process_file(in_file, out_file, interval, video_output):
 
     for frame in result:
         # get input box from yolov8
-        input_box = yolomodel.get_box(frame)
+        input_box = yolomodel.get_boxes(frame)
+
+        if len(input_box) == 0:
+            # if no detections, continue to next frame
+            print('NO DETECTION')
+            continue
+        else:
+            # if there is/are detections, get the largest bounding box from the results in (xyxy) format
+            input_box = input_box.xyxy[0].cpu().numpy()
+
         print(f"Frame shape: {frame.shape}")
 
         # input box into SAM predictor
@@ -33,5 +42,5 @@ def process_file(in_file, out_file, interval, video_output):
 
         # write mask onto csv file
         data_writer.process(mask)
-        print(f'saved first row of mask {count}')
+        print(f"Wrote frame: {count}")
         count += 1
