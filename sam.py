@@ -4,7 +4,8 @@ Segment Anything Model (SAM) File
 '''
 import torch
 import numpy as np
-from segment_anything import sam_model_registry, SamPredictor
+#from segment_anything import sam_model_registry, SamPredictor
+from mobile_sam import sam_model_registry, SamPredictor
 
 class SegmentAnything:
     # Initializes model
@@ -17,8 +18,10 @@ class SegmentAnything:
             device = torch.device("cpu")
 
         # The model weights and model type
-        sam_checkpoint = "assets/sam_vit_b_01ec64.pth"
-        model_type = "vit_b"
+        #sam_checkpoint = "assets/sam_vit_b_01ec64.pth"
+        #model_type = "vit_b"
+        sam_checkpoint = "weight/mobile_sam.pt"
+        model_type = "vit_t"
         
         # Define model and set it to device
         self.model = sam_model_registry[model_type](checkpoint=sam_checkpoint)

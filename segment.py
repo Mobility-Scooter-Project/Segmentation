@@ -8,6 +8,9 @@ from videos import Video
 from yolov8 import YOLOv8
 from csv_output import CSVOutput
 import numpy as np
+import time
+
+# with mobileSAM, 1800 frames took 318.052 seconds, or 5.66 frames per second
 
 def process_file(in_file, out_file, interval, video_output):
     # instantiate the SegmentAnything, YOLOv8, and Video classes
@@ -21,6 +24,7 @@ def process_file(in_file, out_file, interval, video_output):
     # gets all frames from video and saves it into a list
     result = cap.get_all_frames()
 
+    start_time = time.time()
     for frame in result:
         # get input box from yolov8
         input_box = yolomodel.get_boxes(frame)
@@ -44,3 +48,5 @@ def process_file(in_file, out_file, interval, video_output):
         data_writer.process(mask)
         print(f"Wrote frame: {count}")
         count += 1
+    
+    print(f"Program took: {time.time() - start_time}")
