@@ -62,6 +62,18 @@ class Video:
         print("Retrieved Frames.")
         return frames
 
-    # Generates a new video with the given frames and bounding box (to do)
-    def create_video(frames, masks, box):
-        pass
+    def make_video(self, frame, out):
+        size = list(frame.shape)
+        del size[2]
+        size.reverse()
+        self.writer = cv2.VideoWriter(out, cv2.VideoWriter_fourcc(*'mp4v'), 30, size)
+
+    def append_frame(self, frame, mask, box):
+        h, w = mask.shape[-2:]
+        new_image = frame * mask.reshape(h, w, 1)
+        new_image = cv2.rectangle(new_image, (int(box[0].item()), int(box[1].item())), 
+                              (int(box[2].item()), int(box[3].item())), (0, 255, 0), 2)
+        self.writer.write(new_image)
+
+    def release_video(self):
+        self.writer.release()

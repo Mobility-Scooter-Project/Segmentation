@@ -24,6 +24,9 @@ def process_file(in_file, out_file, interval, video_output):
     # gets all frames from video and saves it into a list
     result = cap.get_all_frames()
 
+    if video_output != None:
+        cap.make_video(result[0], video_output)
+
     start_time = time.time()
     for frame in result:
         # get input box from yolov8
@@ -48,5 +51,12 @@ def process_file(in_file, out_file, interval, video_output):
         data_writer.process(mask)
         print(f"Wrote frame: {count}")
         count += 1
+
+        # append processed frame to new video
+        if video_output != None:
+            cap.append_frame(frame, mask, input_box)
     
+    if video_output != None:
+        cap.release_video()
+        
     print(f"Program took: {time.time() - start_time}")
