@@ -4,17 +4,20 @@ Segment File
 '''
 
 from sam import SegmentAnything
+from nano import NanoSam
 from videos import Video
 from yolov8 import YOLOv8
 from csv_output import CSVOutput
 import numpy as np
 import time
+from PIL import Image
+import matplotlib.pyplot as plt
 
 # with mobileSAM, 1800 frames took 318.052 seconds, or 5.66 frames per second
 
 def process_file(in_file, out_file, interval, video_output):
     # instantiate the SegmentAnything, YOLOv8, and Video classes
-    sammodel = SegmentAnything()
+    sammodel = NanoSam()
     yolomodel = YOLOv8()
     cap = Video(in_file, interval)
     data_writer = CSVOutput(out_file, None)
@@ -31,6 +34,7 @@ def process_file(in_file, out_file, interval, video_output):
     for frame in result:
         # get input box from yolov8
         input_box = yolomodel.get_boxes(frame)
+        points = np.empty([2, 2])
 
         if len(input_box) == 0:
             # if no detections, continue to next frame
@@ -39,11 +43,19 @@ def process_file(in_file, out_file, interval, video_output):
         else:
             # if there is/are detections, get the largest bounding box from the results in (xyxy) format
             input_box = input_box.xyxy[0].cpu().numpy()
+            points = np.array([[input_box[0], input_box[1]], [input_box[2], input_box[3]]])
 
         print(f"Frame shape: {frame.shape}")
 
         # input box into SAM predictor
-        mask = sammodel.process(frame, input_box)
+
+        # convert to PIL
+        frame_pil = Image.fromarray(frame)
+
+        mask = sammodel.process(frame_pil, points)
+
+        mask = (mask[0, 0] > 0).detach().cpu().numpy()
+
         print(f"Mask shape: {mask.shape}")
         print(f"the sparsity of the mask is: {1.0 - (np.count_nonzero(mask) / mask.size)}")
 
