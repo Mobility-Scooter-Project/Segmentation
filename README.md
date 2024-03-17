@@ -33,15 +33,15 @@ The following results were from processing 360 frames of video data. Also Includ
             <td style="text-align: center; border-right: solid 1px">YOLOv8 + MobileSAM (No TensorRT)</td>
             <td style="text-align: center; border-right: solid 1px">233.82</td>
             <td style="text-align: center; border-right: solid 1px">1.54</td>
-            <td style="text-align: center; border-right: solid 1px">TBD</td>
-            <td style="text-align: center; border-right: solid 1px">TBD</td>
+            <td style="text-align: center; border-right: solid 1px">58.65</td>
+            <td style="text-align: center; border-right: solid 1px">6.14</td>
         </tr>
         <tr>
             <td style="text-align: center; border-right: solid 1px">YOLOv8 + NanoSAM (w/ TensorRT)</td>
             <td style="text-align: center; border-right: solid 1px">120.72</td>
             <td style="text-align: center; border-right: solid 1px">2.98</td>
-            <td style="text-align: center; border-right: solid 1px">TBD</td>
-            <td style="text-align: center; border-right: solid 1px">TBD</td>
+            <td style="text-align: center; border-right: solid 1px">65.20</td>
+            <td style="text-align: center; border-right: solid 1px">5.52</td>
         </tr>
     </tbody>
 </table>
