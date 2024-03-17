@@ -33,7 +33,7 @@ def process_file(in_file, out_file, interval, video_output):
     start_time = time.time()
     for frame in result:
         # get input box from yolov8
-        input_box = yolomodel.get_boxes(frame)
+        input_box = yolomodel.get_boxes_tensorrt(frame)
         points = np.empty([2, 2])
 
         if len(input_box) == 0:

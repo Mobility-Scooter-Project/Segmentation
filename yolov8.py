@@ -11,6 +11,8 @@ class YOLOv8:
         # Load pretrained yolov8 model
         # May download model onto computer
         self.model = YOLO('assets/yolov8n.pt')
+        #self.model.export(format='engine')
+        self.tensorrt_model = YOLO('assets/yolov8n.engine')
 
     # Takes in a video frame and returns a bounding box for the largest subject in frame
     def get_boxes(self, frame):
@@ -18,4 +20,9 @@ class YOLOv8:
         results = self.model(frame)
 
         # Returns the boxes found in the frame as a 'Boxes' object
+        return results[0].boxes
+    
+    def get_boxes_tensorrt(self, frame):
+        results = self.tensorrt_model(frame)
+
         return results[0].boxes
