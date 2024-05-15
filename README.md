@@ -1,5 +1,5 @@
 # Segmentation
-Generates mask data from videos using YOLOv8, Segment Anything, MobileSAM, and NanoSAM.
+Generates mask data from videos using YOLOv8, Segment Anything, MobileSAM, and NanoSAM. YOLOv8 is used alongside SAM to input a bounding box as a prompt, which allows SAM to segment just the driver's body rather than everything in the frame.
 
 ### Curent Notes
 * MobileSAM version available in "fast" branch
@@ -26,11 +26,16 @@ python main.py -i INPUT_VIDEO -o OUTPUT_CSV -f FRAME_SKIP -v VIDEO_PATH
     * If the flag is not specified, a video will not be generated
 
 ### System Environment
-Jetson Orin Nano  
-JetPack 5.1.3  
-Python 3.8  
-CUDA 11.4.19  
-TensorRT 8.5.2  
+* Jetson Orin Nano  
+* JetPack 5.1.3  
+* Python 3.8  
+* CUDA 11.4.19  
+* TensorRT 8.5.2
+
+### Specs
+* 1024-core NVIDIA Ampere architecture GPU with 32 Tensor Cores
+* 6-core Arm Cortex-A78AE v8.2 64-bit CPU
+* 8GB 128-bit LPDDR5
 
 ### Performance
 The following results were from processing 10800 frames of video data.
